@@ -1,0 +1,1 @@
+DROP TYPE attendance_status

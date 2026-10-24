@@ -1,0 +1,38 @@
+# ==========================================
+# Operating System & IDE Files
+# ==========================================
+.DS_Store
+.DS_Store?
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/*
+!.vscode/settings.json
+
+# Environment & Secrets
+.env
+.env.local
+*.pem
+*.key
+
+# ==========================================
+# Frontend (/frontend)
+# ==========================================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/npm-debug.log*
+
+# ==========================================
+# Backend (/backend)
+# ==========================================
+backend/bin/
+backend/tmp/
+backend/main
+backend/*.exe
+backend/*.out
+backend/coverage.out

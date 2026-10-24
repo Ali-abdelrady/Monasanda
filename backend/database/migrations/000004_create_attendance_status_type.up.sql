@@ -1,0 +1,1 @@
+CREATE TYPE attendance_status AS ENUM ('present','absent')

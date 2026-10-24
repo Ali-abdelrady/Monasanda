@@ -1,0 +1,1 @@
+DROP TABLE vacation_batches
