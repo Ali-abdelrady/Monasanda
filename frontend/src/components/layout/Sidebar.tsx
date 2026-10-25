@@ -24,20 +24,26 @@ export function Sidebar({ user, isHome, onHome, onLogout }: Props) {
       <button className={`nav-item ${isHome ? "active" : ""}`} onClick={onHome}>
         <LayoutGrid size={18} /> دفعات الإجازات
       </button>
-      <div className="side-note">
+      {/* <div className="side-note">
         <div className="side-note-icon">
           <Activity size={17} />
         </div>
         <strong>كل شيء في مكان واحد</strong>
         <p>تابع الحضور، وراجع الأعداد، وصدّر الكشوف بسهولة.</p>
-      </div>
+      </div> */}
       <div className="sidebar-bottom">
-        <div className="user-avatar">{user.email.slice(0, 1).toUpperCase()}</div>
+        <div className="user-avatar">
+          {user.email.slice(0, 1).toUpperCase()}
+        </div>
         <div className="user-meta">
           <strong>{user.email}</strong>
           <span>مستخدم مسجل</span>
         </div>
-        <button className="icon-btn logout-icon" title="تسجيل الخروج" onClick={onLogout}>
+        <button
+          className="icon-btn logout-icon"
+          title="تسجيل الخروج"
+          onClick={onLogout}
+        >
           <LogOut size={17} />
         </button>
       </div>

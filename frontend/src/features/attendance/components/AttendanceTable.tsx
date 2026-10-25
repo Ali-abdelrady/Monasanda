@@ -8,7 +8,7 @@ import { getReturnStatus } from "../../../lib/utils";
 
 interface Props {
   rows: Attendance[];
-  totalCount: number;
+  firstIndex: number;
   stats: AttendanceStats;
   selected: number[];
   allSelected: boolean;
@@ -20,7 +20,7 @@ interface Props {
 }
 
 export function AttendanceTable(props: Props) {
-  const { rows, totalCount, stats, selected, allSelected } = props;
+  const { rows, stats, selected, allSelected, firstIndex } = props;
   return (
     <div className="table-wrap">
       <table className="attendance-table">
@@ -59,7 +59,9 @@ export function AttendanceTable(props: Props) {
                   onChange={() => props.onToggleSelected(p.id)}
                 />
               </td>
-              <td className="row-number">{(i + 1).toLocaleString("ar-EG")}</td>
+              <td className="row-number">
+                {(firstIndex + i + 1).toLocaleString("ar-EG")}
+              </td>
               <td>
                 <div className="person-cell">
                   <div>
@@ -138,10 +140,6 @@ export function AttendanceTable(props: Props) {
         </tbody>
       </table>
       <div className="table-footer">
-        <span>
-          عرض {rows.length.toLocaleString("ar-EG")} من{" "}
-          {totalCount.toLocaleString("ar-EG")} فرد
-        </span>
         <span>
           <span className="mini-dot green-dot" />{" "}
           {stats.present.toLocaleString("ar-EG")} حاضر{" "}

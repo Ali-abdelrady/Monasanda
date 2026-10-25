@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { CircleAlert, FileSpreadsheet, Plus, RefreshCw, ShieldCheck } from "lucide-react";
+import {
+  CircleAlert,
+  FileSpreadsheet,
+  Plus,
+  RefreshCw,
+  ShieldCheck,
+} from "lucide-react";
 import { api } from "@/lib/api";
 import { errorMessage } from "@/lib/errors";
 import { useToast } from "@/context/ToastContext";
@@ -12,10 +18,17 @@ import { BatchFormModal } from "./BatchFormModal";
 
 type FormState = { batch: VacationBatch | null } | null;
 
-export function BatchesPage({ onOpen }: { onOpen: (batch: VacationBatch) => void }) {
+export function BatchesPage({
+  onOpen,
+}: {
+  onOpen: (batch: VacationBatch) => void;
+}) {
   const qc = useQueryClient();
   const { notify } = useToast();
-  const batchesQuery = useQuery({ queryKey: ["batches"], queryFn: api.batches });
+  const batchesQuery = useQuery({
+    queryKey: ["batches"],
+    queryFn: api.batches,
+  });
   const [form, setForm] = useState<FormState>(null);
   const [deleting, setDeleting] = useState<VacationBatch | null>(null);
 
@@ -70,7 +83,12 @@ export function BatchesPage({ onOpen }: { onOpen: (batch: VacationBatch) => void
         <div className="empty-state">
           <CircleAlert size={28} />
           <h3>تعذر تحميل الدفعات</h3>
-          <p>{errorMessage(batchesQuery.error, "تحقق من اتصال الخادم وحاول مرة أخرى.")}</p>
+          <p>
+            {errorMessage(
+              batchesQuery.error,
+              "تحقق من اتصال الخادم وحاول مرة أخرى.",
+            )}
+          </p>
           <Button variant="secondary" onClick={() => batchesQuery.refetch()}>
             <RefreshCw size={16} /> إعادة المحاولة
           </Button>
@@ -94,22 +112,14 @@ export function BatchesPage({ onOpen }: { onOpen: (batch: VacationBatch) => void
             <Plus size={16} />
           </div>
           <h3>لسه مفيش دفعات</h3>
-          <p>ابدأ بإنشاء دفعة إجازات جديدة، وبعدها استورد كشف الأفراد من Excel.</p>
+          <p>
+            ابدأ بإنشاء دفعة إجازات جديدة، وبعدها استورد كشف الأفراد من Excel.
+          </p>
           <Button onClick={() => setForm({ batch: null })}>
             <Plus size={17} /> إنشاء أول دفعة
           </Button>
         </div>
       )}
-
-      <div className="info-banner">
-        <div className="info-icon">
-          <ShieldCheck size={20} />
-        </div>
-        <div>
-          <strong>بياناتك، تحت السيطرة</strong>
-          <p>تسجيل الحضور مرتبط بحساب المستخدم، ويتم حفظ وقت التمام من خلال الخادم.</p>
-        </div>
-      </div>
 
       {form && (
         <BatchFormModal

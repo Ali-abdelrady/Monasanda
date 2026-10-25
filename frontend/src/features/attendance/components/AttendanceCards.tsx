@@ -7,6 +7,7 @@ import {
   Smartphone,
   Trash2,
   Users,
+  Notebook,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { formatDate, formatTime } from "@/lib/utils";
@@ -70,17 +71,23 @@ export function AttendanceCards({ rows, selected, ...actions }: Props) {
                 return <span>{status.label}</span>;
               })()}
             </div>
+            {p.notes && (
+              <div>
+                <Notebook size={15} />
+                <span>{p.notes}</span>
+              </div>
+            )}
             {p.checkedInAt && (
               <div>
                 <Clock3 size={15} />
                 <span>وقت الحضور {formatTime(p.checkedInAt)}</span>
               </div>
             )}
-            {p.checkedInAt && (
+            {p.checkedInBy && (
               <div>
                 <Users size={15} />
                 <span>
-                  تم التمام بسواطة {p.checkedInBy.email.split("@")[0]}
+                  تم التمام بسواطة {p?.checkedInBy?.email.split("@")[0]}
                 </span>
               </div>
             )}

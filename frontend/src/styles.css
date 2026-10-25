@@ -1263,7 +1263,7 @@ textarea:focus-visible {
   border-top: 1px solid var(--line-soft);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 22px;
   font-size: var(--fs-sm);
   color: var(--muted);
@@ -1273,6 +1273,30 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   gap: 7px;
+}
+.attendance-pagination {
+  min-height: 64px;
+  padding: 10px 22px;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pagination-controls .btn {
+  min-height: 36px;
+  padding: 6px 14px;
+}
+.pagination-controls .btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 .footer-divider {
   margin: 0 6px;
@@ -2238,6 +2262,15 @@ textarea:focus-visible {
     padding: 10px 14px;
     flex-wrap: wrap;
     gap: 4px;
+  }
+  .attendance-pagination {
+    padding: 12px 14px;
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .pagination-controls {
+    justify-content: space-between;
+    gap: 8px;
   }
   .sync-caption {
     flex-wrap: wrap;

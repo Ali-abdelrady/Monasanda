@@ -1,4 +1,5 @@
 import { CircleAlert, FileSpreadsheet, Plus, RefreshCw, Search, Upload, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
 import { Button } from "@/components/ui/Button";
 import { errorMessage } from "@/lib/errors";
@@ -13,6 +14,8 @@ import { AttendanceToolbar } from "./AttendanceToolbar";
 import { BulkBar } from "./BulkBar";
 import { AttendanceTable } from "./AttendanceTable";
 import { AttendanceCards } from "./AttendanceCards";
+
+const PAGE_SIZE = 10;
 
 interface Props {
   batch: VacationBatch;
@@ -35,6 +38,19 @@ interface Props {
 export function RecordsPanel(props: Props) {
   const { batch, people, stats, query, filters, selection, view } = props;
   const { notify } = useToast();
+  const [page, setPage] = useState(1);
+  const pageCount = Math.ceil(filters.filtered.length / PAGE_SIZE);
+  const currentPage = Math.min(page, pageCount);
+  const firstIndex = (currentPage - 1) * PAGE_SIZE;
+  const pageRows = filters.filtered.slice(firstIndex, firstIndex + PAGE_SIZE);
+
+  useEffect(() => {
+    setPage(1);
+  }, [filters.search, filters.status]);
+
+  useEffect(() => {
+    if (page > pageCount) setPage(Math.max(1, pageCount));
+  }, [page, pageCount]);
 
   const renderBody = () => {
     if (query.isPending)
@@ -89,7 +105,7 @@ export function RecordsPanel(props: Props) {
       );
 
     const rowProps = {
-      rows: filters.filtered,
+      rows: pageRows,
       selected: selection.selected,
       onToggleSelected: selection.toggle,
       onToggleAttendance: props.onToggleAttendance,
@@ -100,7 +116,7 @@ export function RecordsPanel(props: Props) {
     return view === "table" ? (
       <AttendanceTable
         {...rowProps}
-        totalCount={people.length}
+        firstIndex={firstIndex}
         stats={stats}
         allSelected={selection.allVisibleSelected}
         onToggleAll={selection.toggleAllVisible}
@@ -151,6 +167,39 @@ export function RecordsPanel(props: Props) {
       )}
 
       {renderBody()}
+      {!query.isPending &&
+        !query.isError &&
+        filters.filtered.length > 0 && (
+          <div className="attendance-pagination">
+            <span>
+              عرض {(firstIndex + 1).toLocaleString("ar-EG")} -{" "}
+              {Math.min(firstIndex + PAGE_SIZE, filters.filtered.length).toLocaleString("ar-EG")} من{" "}
+              {filters.filtered.length.toLocaleString("ar-EG")} فرد
+            </span>
+            <div className="pagination-controls" dir="rtl">
+              <Button
+                variant="secondary"
+                disabled={currentPage <= 1}
+                onClick={() => setPage((current) => Math.max(1, current - 1))}
+              >
+                السابق
+              </Button>
+              <span>
+                صفحة {currentPage.toLocaleString("ar-EG")} من{" "}
+                {pageCount.toLocaleString("ar-EG")}
+              </span>
+              <Button
+                variant="secondary"
+                disabled={currentPage >= pageCount}
+                onClick={() =>
+                  setPage((current) => Math.min(pageCount, current + 1))
+                }
+              >
+                التالي
+              </Button>
+            </div>
+          </div>
+        )}
     </section>
   );
 }

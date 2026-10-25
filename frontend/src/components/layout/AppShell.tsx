@@ -18,12 +18,12 @@ export function AppShell({ user, isHome, onHome, onLogout, children }: Props) {
       <main className="main-area">
         <Topbar user={user} />
         <div className="page-content">{children}</div>
-        <footer className="app-footer">
+        {/* <footer className="app-footer">
           <span>
             تمامات <span className="footer-divider">·</span> نظام إدارة العودة من الإجازات
           </span>
           <span>واجهة إدارية داخلية</span>
-        </footer>
+        </footer> */}
       </main>
     </div>
   );
