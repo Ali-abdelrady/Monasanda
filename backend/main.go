@@ -9,13 +9,15 @@ import (
 	"mosanda-vacation-attendace/router"
 	"mosanda-vacation-attendace/service"
 	"net/http"
+	"os"
 	"time"
-
+	
 	"github.com/alexedwards/argon2id"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres" // driver
 	_ "github.com/golang-migrate/migrate/v4/source/file"       // source driver
-	_ "github.com/lib/pq"                                      // Blank import loads the driver
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq" // Blank import loads the driver
 )
 
 func runMigrations(parConnStr string) error {
@@ -37,7 +39,15 @@ func runMigrations(parConnStr string) error {
 }
 
 func main() {
-	connStr := "postgres://postgres:admin@localhost:5432/mosanda?sslmode=disable"
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	connStr := os.Getenv("DATABASE_URL")
+
+	if connStr == "" {
+		log.Fatal("DATABASE_URL is not set")
+	}
 
 	// 1. Run migrations
 	if err := runMigrations(connStr); err != nil {

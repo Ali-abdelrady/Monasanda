@@ -9,8 +9,9 @@ import (
 	"os"
 	"reflect"
 
+	"mosanda-vacation-attendace/pkg/osioutil"
+
 	"github.com/fatih/structs"
-	"github.com/raafatibm/firnaspkgs/osioutil"
 )
 
 func MapToObject(parSource map[string]interface{}, parDestination any) error {

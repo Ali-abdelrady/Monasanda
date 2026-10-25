@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"time"
 
+	"mosanda-vacation-attendace/pkg/osioutil"
+
 	"github.com/google/uuid"
-	"github.com/raafatibm/firnaspkgs/osioutil"
 )
 
 type User struct {

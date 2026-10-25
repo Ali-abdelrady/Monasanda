@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/mitchellh/mapstructure"
-	"github.com/raafatibm/firnaspkgs/osioutil"
+	"mosanda-vacation-attendace/pkg/osioutil"
 )
 
 func UnmarshalR(parData []byte, parDestination any) error {
