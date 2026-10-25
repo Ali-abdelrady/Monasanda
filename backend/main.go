@@ -137,7 +137,7 @@ func seedUsers(db *sql.DB) error {
 			ctx,
 			`INSERT INTO users (email, hash_password, created_at)
 			 VALUES ($1, $2, $3)
-			 ON CONFLICT (email) DO NOTHING`,
+			`,
 			email,
 			passwordHash,
 			time.Now(),
